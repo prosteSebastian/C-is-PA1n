@@ -62,6 +62,19 @@ int finishIt ( TITEM * a ) {
   return 0;
 }
 
+TITEM * shorter ( TITEM * a, TITEM * b, 
+                TITEM * ptrA, TITEM * ptrB ) {
+  if ( b->m_Digit < a->m_Digit ) {
+    return ptrA;
+  } 
+  else if ( finishIt ( a->m_Next ) ) {
+    return ptrA;
+  }
+  else {
+    return ptrB;
+  }
+}
+
 TITEM * compare ( TITEM * a, TITEM * b ) {
   int mode = 0; //max on a
   TITEM * max = a;
@@ -76,17 +89,8 @@ TITEM * compare ( TITEM * a, TITEM * b ) {
   while ( a != NULL || b != NULL ) {
     if ( mode ) { //max on b
       if ( b->m_Next == NULL && a->m_Next != NULL ) {
-        if ( b->m_Digit < a->m_Digit ) {
-          max = ptrA;
-          break;
-        } 
-        else if ( finishIt ( a->m_Next ) ) {
-          max = ptrA;
-          break;
-        }
-        else {
-          break;
-        }
+        max = shorter ( a, b, ptrA, ptrB );
+        break;
       }
       else if ( b->m_Next != NULL && a->m_Next == NULL ) {
         if ( b->m_Digit < a->m_Digit ) {
@@ -108,17 +112,8 @@ TITEM * compare ( TITEM * a, TITEM * b ) {
     }
     else { //max on a
       if ( a->m_Next == NULL && b->m_Next != NULL ) {
-        if ( a->m_Digit < b->m_Digit ) {
-          max = ptrB;
-          break;
-        } 
-        else if ( finishIt ( b->m_Next ) ) {
-          max = ptrB;
-          break;
-        }
-        else {
-          break;
-        }
+        max = shorter ( b, a, ptrB, ptrA );
+        break;
       }
       else if ( a->m_Next != NULL && b->m_Next == NULL ) {
         if ( a->m_Digit < b->m_Digit ) {
