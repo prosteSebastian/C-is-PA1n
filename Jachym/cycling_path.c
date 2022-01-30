@@ -48,6 +48,8 @@ P* p_init(int dist, int height) {
 
 void arr_free(Pa* arr) {
     for (int i = 0; i < arr -> size; i++) {
+
+        printf("Here 1\n");
         free(arr -> ps[i]);
     }
 
@@ -201,6 +203,7 @@ P* find_diffs(Pa* arr, Pa* arr_out) {
 
 int main() {
     Pa* arr = arr_init();
+    Pa* arr_out = arr_init();
 
     printf("Cyklotrasa:\n");
     read_start(arr);
@@ -211,14 +214,16 @@ int main() {
     if (!is_ok(arr)) {
         printf("Nenalezeno\n");
     } else {
-        Pa* arr_out = arr_init();
         P* diffs = find_diffs(arr, arr_out);
         printf("\n%d km, klesani: %d m, varianty: %d\n", diffs -> dist, diffs -> height, arr_out -> size / 2);
-        free(diffs);
         arr_print(arr_out);
-        arr_free(arr_out);
+        free(diffs);
     }
 
+    printf("Regular free\n");
     arr_free(arr);
+    // points were freed
+    free(arr_out -> ps);
+    free(arr_out);;
     return 0;
 }
