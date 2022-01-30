@@ -185,6 +185,28 @@ int main ( int argc, char * argv [] ) {
   res = compareList ( a, 3 );
   delList ( res );
 
+  a[0] = createItem ( 15,
+           createItem ( 19,
+             createItem ( 23,
+               createItem ( 142, NULL ))));
+  a[1] = createItem ( 17,
+           createItem ( 18, 
+             createItem ( 18,
+               createItem ( 21, NULL ))));
+  a[2] = createItem ( 11,
+           createItem ( 18,
+             createItem ( 19,
+               createItem ( 40, NULL ))));      
+  res = compareList ( a, 3 );
+  delList ( res );
+
+  a[0] = createItem ( 1, NULL );
+  a[1] = createItem ( 2, NULL );
+  a[2] = createItem ( 5, NULL );
+  a[3] = createItem ( 4, NULL );
+  res = compareList ( a, 4 );
+  delList ( res );
+
   a[0] = createItem ( -4,
            createItem ( 2,
              createItem ( 4,
