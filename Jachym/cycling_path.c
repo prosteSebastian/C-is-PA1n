@@ -8,7 +8,7 @@ typedef struct Point {
 } P;
 
 typedef struct PointArray {
-    Point** ps;
+    P** ps;
     int size;
     int max;
 } Pa;
@@ -16,6 +16,7 @@ typedef struct PointArray {
 
 Pa* arr_init() {
     Pa* arr = (Pa *)malloc(sizeof(Pa));
+    // gotta init everything
 
     arr -> ps = NULL;
     arr -> size = 0;
@@ -27,10 +28,12 @@ Pa* arr_init() {
 
 void arr_push(Pa* arr, P* p) {
     if (arr -> size >= arr -> max) {
+        // max size reached, more memory needed
         arr -> max = arr -> max * 2 + 4;
         arr -> ps = (P **)realloc(arr -> ps, arr -> max * sizeof(P *));
     }
 
+    // just adding
     arr -> ps[arr -> size] = p;
     arr -> size++;
 }
@@ -38,6 +41,7 @@ void arr_push(Pa* arr, P* p) {
 
 P* p_init(int dist, int height) {
     P* p = (P *)malloc(sizeof(P));
+    // gotta init everything
 
     p -> dist = dist;
     p -> height = height;
@@ -48,12 +52,13 @@ P* p_init(int dist, int height) {
 
 void arr_free(Pa* arr) {
     for (int i = 0; i < arr -> size; i++) {
-
-        printf("Here 1\n");
+        // free every point
         free(arr -> ps[i]);
     }
 
+    // free the array of poiints
     free(arr -> ps);
+    // free the array struct
     free(arr);
 }
 
@@ -87,6 +92,7 @@ void p_print(P* p) {
 
 
 void path_print(P* a, P* b) {
+    // format the path
     printf("+ ");
     p_print(a);
     printf(" -> ");
