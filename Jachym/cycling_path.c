@@ -214,7 +214,9 @@ int main() {
         Pa* arr_out = arr_init();
         P* diffs = find_diffs(arr, arr_out);
         printf("\n%d km, klesani: %d m, varianty: %d\n", diffs -> dist, diffs -> height, arr_out -> size / 2);
+        free(diffs);
         arr_print(arr_out);
+        arr_free(arr_out);
     }
 
     arr_free(arr);
