@@ -35,23 +35,15 @@ void printList ( TITEM * r ) {
   printf ("\n");
 }
 
-int checkDigits ( TITEM * a, TITEM * b ) {
-  //control a
+int checkDigits ( TITEM * a ) {
   if ( a->m_Digit == '0' && !(a->m_Next) ) return 0;  
+  
   for ( ; a->m_Next ; a = a->m_Next )
     if ( ! ( a->m_Digit >= '0' && a->m_Digit <= '9' ) )
       return 1;
+  
   if ( !( a->m_Digit > '0' && a->m_Digit <= '9' ) ) 
     return 1;
-
-  //control b
-  if ( b->m_Digit == '0' && !(b->m_Next) ) return 0;
-  for ( ; b->m_Next ; b = b->m_Next )
-    if ( ! ( b->m_Digit >= '0' && b->m_Digit <= '9' ) )
-      return 1;
-  if ( !( b->m_Digit > '0' && b->m_Digit <= '9' ) ) 
-    return 1;
-
   return 0;
 }
 
@@ -134,7 +126,8 @@ TITEM * addList ( TITEM * a, TITEM * b ) {
   printf ("\n");
 
   if ( !a || !b ) return NULL;
-  if ( checkDigits ( a, b ) ) return NULL;
+  if ( checkDigits (a) || checkDigits (b) ) 
+    return NULL;
 
   TITEM * res = resList ( a, b );
   printf ("result ");
