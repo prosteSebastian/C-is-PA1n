@@ -18,7 +18,7 @@ Tnode * createItem ( int i ,Tnode * next ) {
 }
 
 void delList ( Tnode * l ) {
-  if ( l != NULL )
+  if ( l )
     delList ( l->m_Next );
   free ( l );
 }
@@ -26,14 +26,14 @@ void delList ( Tnode * l ) {
 
 void printList ( Tnode * l ) {
   printf("Digit");
-  for ( ; l != NULL ; l = l->m_Next )
+  for ( ; l ; l = l->m_Next )
     printf(" -> %i", l->m_Val);
   printf("\n");
 }
 
 int checkList ( Tnode ** a, int nr ) {
   for ( int i = 0 ; i < nr ; ++i )
-    if ( a[i] == NULL )
+    if ( !(a[i]) )
       return 1;
   return 0;
 }
@@ -42,7 +42,7 @@ int checkSizes ( Tnode ** a, int nr ) {
   Tnode * tmp1;
   for ( int i = 0 ; i < nr ; ++i ) {
     tmp1 = a[i];
-    for ( ; tmp1->m_Next != NULL ; tmp1 = tmp1->m_Next )
+    for ( ; tmp1->m_Next ; tmp1 = tmp1->m_Next )
       if ( tmp1->m_Val > tmp1->m_Next->m_Val )
         return 1;
   }
@@ -55,7 +55,7 @@ void delArr ( Tnode ** a, int nr ) {
 }
 
 Tnode * resList ( Tnode * a, Tnode * b ) {
-  Tnode * res = a, * tmp, * head;
+  Tnode * res = a, * head;
   int mode = 0; //on a[0]/a branch
 
   if ( a->m_Val > b->m_Val ) {
@@ -65,13 +65,13 @@ Tnode * resList ( Tnode * a, Tnode * b ) {
 
   head = res;
 
-  while ( a != NULL || b!= NULL ) {
+  while ( a || b ) {
     if ( mode ) { //on a[i]/b branch
-      if ( res->m_Next == NULL && a != NULL ) {
+      if ( !(res->m_Next) && a ) {
         res->m_Next = a;
         break;
       }
-      else if ( a == NULL ) {
+      else if ( !a ) {
         break;
       }
       else if ( res->m_Next->m_Val <= a->m_Val ) {
@@ -79,19 +79,18 @@ Tnode * resList ( Tnode * a, Tnode * b ) {
         b = b->m_Next;
       }
       else if ( res->m_Next->m_Val > a->m_Val ) {
-        tmp = b->m_Next;
+        b = b->m_Next;
         res->m_Next = a;
         mode = 0;
-        b = tmp;
         res = res->m_Next;
       }
     }
     else {
-      if ( res->m_Next == NULL && b != NULL ) {
+      if ( !(res->m_Next) && b ) {
         res->m_Next = b;
         break;
       }
-      else if ( b == NULL ) {
+      else if ( !b ) {
         break;
       }
       else if ( res->m_Next->m_Val <= b->m_Val ) {
@@ -99,10 +98,9 @@ Tnode * resList ( Tnode * a, Tnode * b ) {
         a = a->m_Next;
       }
       else if ( res->m_Next->m_Val > a->m_Val ) {
-        tmp = a->m_Next;
+        a = a->m_Next;
         res->m_Next = b;
         mode = 1;
-        a = tmp;
         res = res->m_Next;
       }
     }
@@ -123,8 +121,7 @@ Tnode * compareList ( Tnode ** a, int nr ) {
     res = resList ( res, a[i] );
   }
 
-  Tnode * headTmp = res;;
-  printList ( headTmp );
+  printList ( res );
 
   return res;
 }
