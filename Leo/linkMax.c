@@ -30,7 +30,7 @@ void deleteList (TITEM * l)
 }
 #endif /* __PROGTEST__ */
 
-int checkAlphas ( TITEM *a, int nr ) {
+int checkAlphas ( TITEM *a ) {
   for ( ; a != NULL ; a = a->m_Next )
     if ( a->m_Digit < '0' || a->m_Digit > '9' )
       return 1;
@@ -41,7 +41,7 @@ int checkDigit ( TITEM ** a, int nr ) {
   for ( int i = 0 ; i < nr ; ++i ) {
     if ( a[i] == NULL )
       return 1;
-    if ( checkAlphas ( a[i], nr ) )
+    if ( checkAlphas ( a[i] ) )
       return 1;        
   }
   return 0;
@@ -156,6 +156,13 @@ int main (int argc, char * argv [])
 {
     TITEM * a[5];
  
+    a[0] = createItem ( '4',
+            createItem ( '3',
+             createItem ( '2',
+              createItem ( '1', NULL ))));
+    assert ( maxOf ( a, 1 ) == a[0] );
+    deleteList( a[0] );
+
     a[0] = createItem ( '4',
             createItem ( '3',
              createItem ( '2',
