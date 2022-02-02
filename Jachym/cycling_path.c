@@ -136,6 +136,9 @@ int is_better_path(P* a, P* b, P* max, P* min) {
     int descent = max -> height - min -> height;
     int temp_desc = a -> height - b -> height;
 
+    int dist = min -> dist - max -> dist;
+    int temp_dist = b -> dist - a -> dist;
+
     // climb
     if (temp_desc < 0) return 0;
 
@@ -145,7 +148,11 @@ int is_better_path(P* a, P* b, P* max, P* min) {
     }
 
     // found one
-    if (temp_desc >= descent) {
+    if (temp_desc > descent) {
+        return 1;
+    }
+
+    if (temp_desc == descent && temp_dist > dist) {
         return 1;
     }
 
@@ -178,7 +185,7 @@ P* max_diff(Pa* arr) {
 }
 
 
-int is_variant(P* a, P* b, P* diffs) {
+int is_option(P* a, P* b, P* diffs) {
     int dist = b -> dist - a -> dist;
     int height = a -> height - b -> height;
 
@@ -195,7 +202,7 @@ P* find_diffs(Pa* arr, Pa* arr_out) {
         for (int j = i + 1; j < arr -> size; j++) {
             P* b = arr -> ps[j];
 
-            if (is_variant(a, b, diffs)) {
+            if (is_option(a, b, diffs)) {
                 arr_push(arr_out, a);
                 arr_push(arr_out, b);
             }
@@ -226,7 +233,6 @@ int main() {
         free(diffs);
     }
 
-    printf("Regular free\n");
     arr_free(arr);
     // points were freed
     free(arr_out -> ps);
